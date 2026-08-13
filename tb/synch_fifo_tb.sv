@@ -1,4 +1,4 @@
-'timescale 1ns/1ps
+`timescale 1ns/1ps
 
 module sync_fifo_tb;
    parameter DATA_WIDTH = 8;

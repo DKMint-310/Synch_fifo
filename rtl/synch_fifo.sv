@@ -1,4 +1,4 @@
-'timescale 1ns/1ps
+`timescale 1ns/1ps
 
 module sync_fifo #(
     parameter DATA_WIDTH = 8,  // 8 bit
@@ -12,10 +12,10 @@ module sync_fifo #(
     output logic  full,
     output logic  empty,
     output logic  [DATA_WIDTH-1:0] dout,
-    output logic [$clog2(DEPTH:0)] count
+    output logic [$clog2(DEPTH):0] count
 );
 
-logic [DATA_WIDTH-1:0] mem [DEPTH] // array
+logic [DATA_WIDTH-1:0] mem [DEPTH]; // array  
 
 logic [$clog2(DEPTH)-1:0] wr_ptr; 
 logic [$clog2(DEPTH)-1:0] rd_ptr;
@@ -33,12 +33,12 @@ end
 // Read
 always_ff @(posedge clk or negedge rstn) begin
   if (!rstn) begin
-    rd_en <= 0;
-    dout <= 0;
-  end else if (rd_en && !empty)
+    rd_ptr <= '0;
+    dout <= '0;
+  end else if (rd_en && !empty) begin
     dout <= mem[rd_ptr];
     rd_ptr <= rd_ptr + 1'b1;
-  end 
+  end
 end
 
 // Counter
@@ -49,7 +49,6 @@ always_ff @(posedge clk or negedge rstn) begin
     case({wr_en && !full , rd_en && !empty}) 
       2'b10: count <= count + 1'b1;
       2'b01: count <= count - 1'b1;
-      default: count <= count;
     endcase
   end
 end
