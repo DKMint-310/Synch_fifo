@@ -30,6 +30,7 @@ module sync_fifo_tb;
 
     #20 rstn = 1;
 
+    //Tc1: Write
     repeat (DEPTH) begin
       @(posedge clk);
        if (!full) begin 
@@ -38,10 +39,19 @@ module sync_fifo_tb;
        end
       end
     @(posedge clk);
-       wr_en = 0;
-       if (full) $display("Full");
+       wr_en <= 0;
     
-    
+    //Tc2: Write while full
+    @(posedge clk);
+      wr_en <= 1;
+      din <= 1;
+    @(posedge clk);
+      wr_en <= 0;
+
+    #1 assert(full == 1 && count == 16)
+     else $error("TC2 failed);
+
+    //Tc3: Read
     repeat (DEPTH) begin
 
       @(posedge clk);
@@ -52,8 +62,19 @@ module sync_fifo_tb;
       @(posedge clk);
         rd_en <= 0;
         if (empty) $display("Empty");
-      
+    
+    //Tc4: Read while empty
+    @(posedge clk);
+      rd_en <= 1;
+    @(posedge clk);
+      rd_en <= 0;
+    #1 assert(empty == 1 && count == 0)
+      else $error("TC4 failed");
+
       #50;
       $finish;
+      $stop;
     end
+
+  
 endmodule
