@@ -4,3 +4,5 @@ xsim.dir/
 *.jou
 *.pb
 *.wdb
+*.vcd
+build/

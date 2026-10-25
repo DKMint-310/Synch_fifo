@@ -1,2 +1,5 @@
-E:/synch_fifo/rtl/synch_fifo.sv
-E:/synch_fifo/tb/synch_fifo_tb.sv
+-i ../tb
+../rtl/synch_fifo.sv
+../tb/fifo_if.sv
+../tb/fifo_pkg.sv
+../tb/synch_fifo_tb.sv

@@ -1,0 +1,10 @@
+# Vivado / XSIM generated files (including commands run from the repo root)
+.Xil/
+xsim.dir/
+/sim/build/
+*.log
+*.jou
+*.pb
+*.wdb
+*.vcd
+vivado_pid*.str
